@@ -32,7 +32,7 @@ router.post('/createUser', function(req, res){
     userID: objID
   });
   newUser.save(function(err, point){
-    if(error) res.status(500).send(error);
+    if(err) res.status(500).send(err);
     else res.status(200).send(point);
   });
 });
@@ -42,10 +42,8 @@ router.post('/createUser', function(req, res){
 router.post('/signIn', function(req, res){
     if(!req.body) return res.send(400);
     User.findOne({username: req.body["username"]}, function(error, user){
-        if(user == null) return res.stats(404);
-        else {
-          res.status(200).send(user);
-        }
+        if(user != null) res.status(200).send(user);
+        else res.status(406).send({"ERROR": "NO ACCESS"});
     });
 });
 module.exports = router;
