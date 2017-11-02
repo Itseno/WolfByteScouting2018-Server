@@ -46,4 +46,14 @@ router.post('/signIn', function(req, res){
         else res.status(406).send({"ERROR": "NO ACCESS"});
     });
 });
+
+//Essential does the same thing as the sign in request and will return a json
+//user object. Just has a different name for my own sanity
+router.post('/getUser', function(req, res){
+  if(!req.body) return res.send(400);
+  User.findOne({username: req.body["username"]}, function(error, user){
+    if(user != null) res.status(200).send(user);
+    else res.status(406).send({"ERROR": "USER DOESNT EXIST"});
+  });
+});
 module.exports = router;
