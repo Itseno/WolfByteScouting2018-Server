@@ -47,7 +47,7 @@ router.post('/signIn', function(req, res){
     });
 });
 
-//Essential does the same thing as the sign in request and will return a json
+//Essentially does the same thing as the sign in request and will return a json
 //user object. Just has a different name for my own sanity
 router.post('/getUser', function(req, res){
   if(!req.body) return res.send(400);
