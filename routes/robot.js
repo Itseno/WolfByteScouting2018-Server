@@ -16,7 +16,9 @@ mongoose.connect('mongodb://localhost/my_db');
 
 var robotSchema = mongoose.Schema({
   robotNumber: Number,
-  scoutingReports: [{username: String}]
+  scoutingReports: [{username: String, movesInAutoValue: Number, crossesAutoLineValue: Number, placesOnSwitchAutoValue: Number, placesOnSwitchAmountValue: Number, placesOnScaleAutoValue: Number, placesOnScaleAmountValue: Number, placesInExchangeAutoValue: Number, placesInExchangeAmountValue: Number}]
+}, {
+  usePushEach: true
 });
 
 var Robot = mongoose.model("Robot", robotSchema);
@@ -33,7 +35,7 @@ router.post('/addScoutingReport', function(req, res){
     {
       var newRobot = new Robot({
         robotNumber: req.body["robotNumber"],
-        scoutingReports: [{username: req.body["username"]}]
+        scoutingReports: [{username: req.body["username"], movesInAutoValue: req.body["movesInAutoValue"], crossesAutoLineValue: req.body["crossesAutoLineValue"], placesOnSwitchAutoValue: req.body["placesOnSwitchAutoValue"], placesOnSwitchAmountValue: req.body["placesOnSwitchAmountValue"], placesOnScaleAutoValue: req.body["placesOnScaleAutoValue"], placesOnScaleAmountValue: req.body["placesOnScaleAmountValue"], placesInExchangeAutoValue: req.body["placesInExchangeAutoValue"], placesInExchangeAmountValue: req.body["placesInExchangeAmountValue"]}]
       });
       newRobot.save(function(e, point){
         if(e) res.status(500).send(e);
@@ -47,7 +49,7 @@ router.post('/addScoutingReport', function(req, res){
       });
     }
     else {
-      robot.scoutingReports.push({username: req.body["username"]});
+      robot.scoutingReports.push({username: req.body["username"], movesInAutoValue: req.body["movesInAutoValue"], crossesAutoLineValue: req.body["crossesAutoLineValue"], placesOnSwitchAutoValue: req.body["placesOnSwitchAutoValue"], placesOnSwitchAmountValue: req.body["placesOnSwitchAmountValue"], placesOnScaleAutoValue: req.body["placesOnScaleAutoValue"], placesOnScaleAmountValue: req.body["placesOnScaleAmountValue"], placesInExchangeAutoValue: req.body["placesInExchangeAutoValue"], placesInExchangeAmountValue: req.body["placesInExchangeAmountValue"]});
       robot.save(function(saveError, robotSaved){
         if(saveError) res.status(500).send(saveError);
         else {
